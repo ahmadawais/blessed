@@ -37,6 +37,7 @@
 			"lib/**",
 			"test/**",
 			"example/**",
+			"examples/**",
 			"browser/**",
 			"vendor/**",
 			"bin/**",
