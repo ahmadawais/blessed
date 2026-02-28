@@ -1,21 +1,58 @@
 {
   "name": "blessed",
-  "description": "A high-level terminal interface library for node.js.",
-  "author": "Christopher Jeffrey",
-  "version": "0.1.81",
+  "description": "A modern terminal interface library for Node.js — built with TypeScript.",
+  "version": "0.0.1",
   "license": "MIT",
-  "main": "./lib/blessed.js",
-  "bin": "./bin/tput.js",
-  "preferGlobal": false,
-  "repository": "git://github.com/chjj/blessed.git",
-  "homepage": "https://github.com/chjj/blessed",
-  "bugs": { "url": "http://github.com/chjj/blessed/issues" },
-  "keywords": ["curses", "tui", "tput", "terminfo", "termcap"],
-  "tags": ["curses", "tui", "tput", "terminfo", "termcap"],
-  "engines": {
-    "node": ">= 0.8.0"
+  "author": "Ahmad Awais",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
   },
-  "browserify": {
-    "transform": ["./browser/transform.js"]
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmadawais/blessed.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "terminal",
+    "tui",
+    "curses",
+    "tput",
+    "terminfo",
+    "typescript",
+    "cli"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
   }
 }
