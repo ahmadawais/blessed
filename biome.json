@@ -31,6 +31,19 @@
 		}
 	},
 	"files": {
-		"ignore": ["dist/**", "node_modules/**", "lib/**", "test/**", "example/**", "browser/**", "vendor/**"]
+		"ignore": [
+			"dist/**",
+			"node_modules/**",
+			"lib/**",
+			"test/**",
+			"example/**",
+			"browser/**",
+			"vendor/**",
+			"bin/**",
+			"usr/**",
+			".jscsrc",
+			".jshintrc",
+			"*.md"
+		]
 	}
 }

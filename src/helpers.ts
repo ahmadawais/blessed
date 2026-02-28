@@ -21,16 +21,16 @@ export const merge = <T extends Record<string, unknown>>(
 };
 
 export const sortByName = <T extends SortableByName>(items: readonly T[]): readonly T[] => {
+	const normalize = (name: string): string => (name.startsWith('.') ? name.slice(1) : name);
+
 	return [...items].sort((a, b) => {
-		const aName = a.name.toLowerCase();
-		const bName = b.name.toLowerCase();
+		const aNorm = normalize(a.name.toLowerCase());
+		const bNorm = normalize(b.name.toLowerCase());
 
-		const aChar = aName[0] === '.' ? (aName[1] ?? '') : (aName[0] ?? '');
-		const bChar = bName[0] === '.' ? (bName[1] ?? '') : (bName[0] ?? '');
+		const primary = aNorm.localeCompare(bNorm);
+		if (primary !== 0) return primary;
 
-		if (aChar > bChar) return 1;
-		if (aChar < bChar) return -1;
-		return 0;
+		return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 	});
 };
 

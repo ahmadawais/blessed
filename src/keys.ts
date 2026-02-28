@@ -227,8 +227,7 @@ export const parseKeySequence = (s: string): KeyEvent | undefined => {
 			return key;
 		}
 
-		key.name = 'undefined';
-		return key;
+		// Unrecognized function key sequence — fall through to return undefined
 	}
 
 	// No recognized key
@@ -261,7 +260,8 @@ export const parseKeypressData = (
 
 	for (const seq of buffer) {
 		const key = parseKeySequence(seq);
-		const ch = seq.length === 1 ? seq : undefined;
+		const isSingleCodePoint = Array.from(seq).length === 1;
+		const ch = isSingleCodePoint ? seq : undefined;
 		if (key || ch) {
 			results.push([ch, key]);
 		}

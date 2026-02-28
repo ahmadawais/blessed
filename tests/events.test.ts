@@ -115,6 +115,31 @@ describe('events', () => {
 			const { state: updated } = once(state, 'test', handler);
 			expect(listenerCount(updated, 'test')).toBe(1);
 		});
+
+		it('only fires the handler once across multiple emits', () => {
+			let callCount = 0;
+			const state = createEmitter();
+			const handler = (): void => {
+				callCount++;
+			};
+			const { state: updated } = once(state, 'test', handler);
+			emit(updated, 'test');
+			emit(updated, 'test');
+			emit(updated, 'test');
+			expect(callCount).toBe(1);
+		});
+
+		it('remove() unregisters the wrapper listener', () => {
+			const state = createEmitter();
+			let called = false;
+			const handler = (): void => {
+				called = true;
+			};
+			const { state: updated, remove } = once(state, 'test', handler);
+			const removed = remove();
+			emit(removed, 'test');
+			expect(called).toBe(false);
+		});
 	});
 
 	describe('listeners', () => {

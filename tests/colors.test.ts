@@ -29,6 +29,14 @@ describe('colors', () => {
 			expect(hexToRGB('#00f')).toEqual([0, 0, 255]);
 			expect(hexToRGB('#fff')).toEqual([255, 255, 255]);
 		});
+
+		it('returns undefined for invalid hex strings', () => {
+			expect(hexToRGB('#zzzzzz')).toBeUndefined();
+			expect(hexToRGB('#gg0000')).toBeUndefined();
+			expect(hexToRGB('red')).toBeUndefined();
+			expect(hexToRGB('')).toBeUndefined();
+			expect(hexToRGB('#12345')).toBeUndefined();
+		});
 	});
 
 	describe('rgbToHex', () => {
@@ -61,6 +69,11 @@ describe('colors', () => {
 
 		it('returns -1 for non-hex strings', () => {
 			expect(match('notahex')).toBe(-1);
+		});
+
+		it('returns -1 for invalid hex colors', () => {
+			expect(match('#zzzzzz')).toBe(-1);
+			expect(match('#gg0000')).toBe(-1);
 		});
 
 		it('finds closest color for arbitrary hex', () => {

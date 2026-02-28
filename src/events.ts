@@ -84,18 +84,19 @@ export const once = (
 	type: string,
 	listener: EventListener,
 ): { state: EventEmitterState; remove: () => EventEmitterState } => {
-	let currentState = state;
+	let fired = false;
 
 	const wrapper: EventListener = (...args: readonly unknown[]): unknown => {
-		currentState = removeListener(currentState, type, wrapper);
+		if (fired) return;
+		fired = true;
 		return listener(...args);
 	};
 
-	currentState = addListener(currentState, type, wrapper);
+	const nextState = addListener(state, type, wrapper);
 
 	return {
-		state: currentState,
-		remove: (): EventEmitterState => removeListener(currentState, type, wrapper),
+		state: nextState,
+		remove: (): EventEmitterState => removeListener(nextState, type, wrapper),
 	};
 };
 

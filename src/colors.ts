@@ -85,7 +85,13 @@ const colorDistance = (
 // Module-level cache for color matching
 const matchCache = new Map<number, ColorIndex>();
 
-export const hexToRGB = (hex: string): RGB => {
+const HEX_3_RE = /^#[0-9a-fA-F]{3}$/;
+const HEX_6_RE = /^#[0-9a-fA-F]{6}$/;
+
+const isValidHex = (hex: string): boolean => HEX_3_RE.test(hex) || HEX_6_RE.test(hex);
+
+export const hexToRGB = (hex: string): RGB | undefined => {
+	if (!isValidHex(hex)) return undefined;
 	let h = hex;
 	if (h.length === 4) {
 		const c1 = h[1] ?? '0';
@@ -110,6 +116,7 @@ export const match = (input: string | RGB | readonly [number, number, number]): 
 	if (typeof input === 'string') {
 		if (input[0] !== '#') return -1;
 		const rgb = hexToRGB(input);
+		if (!rgb) return -1;
 		r1 = rgb[0];
 		g1 = rgb[1];
 		b1 = rgb[2];
@@ -238,6 +245,7 @@ const generateCColors = (): readonly number[] => {
 		if (typeof input === 'string') {
 			if (input[0] !== '#') return -1;
 			const rgb = hexToRGB(input);
+			if (!rgb) return -1;
 			r1 = rgb[0];
 			g1 = rgb[1];
 			b1 = rgb[2];

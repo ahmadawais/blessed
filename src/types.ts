@@ -40,8 +40,8 @@ export interface EventMap {
 }
 
 export interface EventEmitterState {
-	events: Record<string, EventListener | EventListener[]>;
-	maxListeners: number;
+	readonly events: Readonly<Record<string, EventListener | EventListener[]>>;
+	readonly maxListeners: number;
 }
 
 // Style types

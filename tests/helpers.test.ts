@@ -36,12 +36,20 @@ describe('helpers', () => {
 			expect(sorted[2]?.name).toBe('charlie');
 		});
 
-		it('handles dotfiles — sorts by second character', () => {
+		it('handles dotfiles — sorts by normalized name', () => {
 			const items = [{ name: '.bashrc' }, { name: '.awk' }, { name: 'alpha' }];
 			const sorted = sortByName(items);
-			expect(sorted[0]?.name).toBe('.awk');
-			expect(sorted[1]?.name).toBe('alpha');
+			expect(sorted[0]?.name).toBe('alpha');
+			expect(sorted[1]?.name).toBe('.awk');
 			expect(sorted[2]?.name).toBe('.bashrc');
+		});
+
+		it('sorts items with same starting letter fully', () => {
+			const items = [{ name: 'apple' }, { name: 'alpha' }, { name: 'aardvark' }];
+			const sorted = sortByName(items);
+			expect(sorted[0]?.name).toBe('aardvark');
+			expect(sorted[1]?.name).toBe('alpha');
+			expect(sorted[2]?.name).toBe('apple');
 		});
 
 		it('does not mutate original array', () => {
